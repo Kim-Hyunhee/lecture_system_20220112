@@ -24,3 +24,16 @@ def login(params):
             'user' : Users(login_user).get_data_object()
         }
     }
+    
+def sign_up(params):
+    
+    # 이메일이 중복이면 가입 불허 예정
+    
+    sql = f"INSERT INTO users (email, password, name) VALUES ('{params['email']}', '{params['pw']}', '{params['name']}')"
+    
+    db.insertAndCommit(sql)
+    
+    return {
+        'code' : 200,
+        'message' : '회원 가입 성공'
+    }
