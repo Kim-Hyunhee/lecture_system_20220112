@@ -15,3 +15,8 @@ class DBConnetor:
         
         # 커서도 변수로 담아두자
         self.cursor = self.db.cursor()
+        
+    # 쿼리 실행 -> 목록을 리턴하는 메쏘드
+    def excuteAll(self, sql):
+        self.cursor.execute(sql)
+        return self.cursor.fetchall()

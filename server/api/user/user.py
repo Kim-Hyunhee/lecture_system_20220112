@@ -9,8 +9,7 @@ def test():
     
     # DB의 모든 users 조회 쿼리.
     sql = "SELECT * FROM users"
-    db.cursor.execute(sql)
-    all_list = db.cursor.fetchall()
+    all_list = db.excuteAll(sql)
     
     
     # 목록 for -> 한 줄 row로 추출 -> 추출된 row로 모델 클래스로 가공 / dict로 재가공을 한줄로 마무리
