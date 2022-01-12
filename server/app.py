@@ -1,6 +1,7 @@
 # 플라스크 자체를 로딩
 
 from flask import Flask, request
+from server.api.user.user import login_check
 
 from server.db_connector import DBConnetor
 
@@ -28,5 +29,9 @@ def create_app():
     @app.post("/lecture")
     def lecture_post():
         return lecture_test()
+    
+    @app.get("/user")
+    def email_result_get():
+        return login_check(request.args.to_dict())
        
     return app
