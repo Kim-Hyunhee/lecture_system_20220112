@@ -1,26 +1,24 @@
-# 로그인 / 회원가입 등 사용자 정보 관련 기능 모아두는 모듈
-# DB 연결 정보 보관 변수를 import
+# 로그인 / 회원가입 등, 사용자 정보 관련 기능 모아두는 모듈
+# DB 연결정보 보관 변수를 import
 from server.db_connector import DBConnetor
-from server.model.users import Users
+from server.model import Users
 
 db = DBConnetor()
 
 def test():
     
-    # DB의 모든 users 조회 쿼리
+    # DB의 모든 users 조회 쿼리.
     sql = "SELECT * FROM users"
     db.cursor.execute(sql)
     all_list = db.cursor.fetchall()
     
-    all_users = []
     
-    for row in all_list:
-        # Users(row) : Users형태의 인스턴스  생성 => 함수들도 내장하고 있다.
-        # 인스턴스에게 곧바로 -> get_data_object( ) 실행 명령
-        # 해당 유저의 정보를 활용한 dict가 리턴됨
-        # 곧바로 목록의 append의 재료로 활용
-        all_users.append( Users(row).get_data_object() )  
+    # 목록 for -> 한 줄 row로 추출 -> 추출된 row로 모델 클래스로 가공 / dict로 재가공을 한줄로 마무리
     
+    # python for문을 list를 돌 때 => comprehension
+    all_users = [ Users(row).get_data_object() for row in all_list ]
+
+
     return {
-        'users' : all_users
-    }
+        'users': all_users
+    } 

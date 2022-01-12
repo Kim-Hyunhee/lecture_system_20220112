@@ -19,3 +19,4 @@ class Users:
             'address':self.address,
             'gender' :self.gender
         }
+        return data
