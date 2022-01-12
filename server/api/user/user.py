@@ -5,19 +5,22 @@ from server.model import Users
 
 db = DBConnetor()
 
-def test():
+def login(params):
+    sql = f"SELECT * FROM users WHERE email='{params['email']}' AND password='{params['pw']}'"
     
-    # DB의 모든 users 조회 쿼리.
-    sql = "SELECT * FROM users"
-    all_list = db.excuteAll(sql)
+    login_user = db.excuteOne(sql)  # 있다면 인스턴스 없다면 None
+    
+    if login_user == None:
+        return {
+            'code' : 400,
+            'message' : '이메일 또는 비밀번호가 잘못 되었습니다.'
+        }, 400
     
     
-    # 목록 for -> 한 줄 row로 추출 -> 추출된 row로 모델 클래스로 가공 / dict로 재가공을 한줄로 마무리
-    
-    # python for문을 list를 돌 때 => comprehension
-    all_users = [ Users(row).get_data_object() for row in all_list ]
-
-
     return {
-        'users': all_users
-    } 
+        'code' : 200,
+        'message' : '로그인 성공',
+        'data' : {
+            'user' : Users(login_user).get_data_object()
+        }
+    }
