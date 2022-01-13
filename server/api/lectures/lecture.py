@@ -73,3 +73,4 @@ def cancel_apply(params):
         'code' : 200,
         'message' : '수강 신청이 취소 되었습니다.'
             }
+    
