@@ -74,9 +74,25 @@ def cancel_apply(params):
         'message' : '수강 신청이 취소 되었습니다.'
             }
     
-# 특정 강의 상세보기
+# 특정 강의 상세보기 path 방식이용을 위해 id 값을 따로 받아옴
 def view_lecture_detail(id, params):
-    print('조회할 강의 id : ', id)
+
+    # 1. 강의 자체에 대한 정보 조회
+    
+    sql = f"SELECT * FROM lectures WHERE lecture_id = {id}"
+    
+    lecture_data = db.excuteOne(sql)
+    
+    lecture = Lectures(lecture_data)
+    
+    # 2. 강의의 평점을 추가로 조회 (해당 강의의 모든 리뷰의 점수 -> 평균)
+    
+    # 3. 모든 리뷰 내역을 추가로 첨부
+
     return {
-        '임시' :'강의 상세 조회'
+        'code' : 200,
+        'message' : '강의 상세 조회',
+        'data' :{
+            'lecture' : lecture.get_data_object()
+        }
     }
