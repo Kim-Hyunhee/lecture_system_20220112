@@ -64,7 +64,7 @@ def write_review(params):
     ({params['lecture_id']}, {params['user_id']}, '{params['title']}', '{params['content']}', {score})
     """
     
-    db.insertAndCommit(sql)
+    db.excuteQueryAndCommit(sql)
     
     return{
         'code' : 200,

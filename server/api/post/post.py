@@ -38,7 +38,7 @@ def view_post(post_id, params):
 # 게시글 등록
 def add_post(params):
     
-    # 도전과제 : 입력값 검증? (ex. 제목 최소 5글자 등등)
+    # 도전과제 : 입력값 검증? (ex. 제목 최소 5글자, 내용 10글자 이상, id가 본인이 맞는가 등등)
     
     sql = f"""
     INSERT INTO posts
@@ -47,7 +47,7 @@ def add_post(params):
     ({params['user_id']}, '{params['title']}', '{params['content']}')"""
     
     
-    db.insertAndCommit(sql)
+    db.excuteQueryAndCommit(sql)
     
     return {
         'code' : 200,
@@ -64,6 +64,14 @@ def modify_post(params):
     
 # 게시글 삭제
 def delete_post(params):
+    
+    # 파라미터 검증 -> 본인이 쓴 글이 맞는지? + 지우려는 글이 실존하는지?
+    
+    sql = f"DELETE FROM posts WHERE id={params['post_id']}"
+    
+    db.excuteQueryAndCommit(sql)
+    
     return {
-        '임시' : '게시글 삭제'
+        'code' : 200,
+        'message' : '게시글 삭제'
     }
