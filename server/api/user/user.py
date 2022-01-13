@@ -27,11 +27,7 @@ def login(params):
     
 def sign_up(params):
     
-    # 이메일이 중복이면 가입 불허 예정
-    # 2. GET /user
-    #   => 파라미터로 email을 주면 해당 이메일이 일치하는 사용자 정보를 리턴
-    #   => 같은 이메일이 없다면 400처리 (해당 사용자는 존재하지 않습니다.)
-    
+    # 이메일이 중복이면 가입 불허 예정    
     sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
     
     already_user_data = db.excuteOne(sql)
@@ -43,7 +39,6 @@ def sign_up(params):
             'message' :'이미 사용중인 이메일 입니다.'
         }, 400
     
-    
     sql = f"INSERT INTO users (email, password, name) VALUES ('{params['email']}', '{params['pw']}', '{params['name']}')"
     
     db.insertAndCommit(sql)
@@ -53,21 +48,11 @@ def sign_up(params):
         'message' : '회원 가입 성공'
     }
     
-def login_check(params):
-    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
-
-    login_user = db.excuteOne(sql)
-    if login_user :
-        return {
-        'code' : 200,
-        'message' : '로그인 성공',
-        'data' : {
-            'user' : Users(login_user).get_data_object()
-        }
-    }
-    
+# 이메일 받아서 -> 사용자 정보 조회
+    # 2. GET /user
+    #   => 파라미터로 email을 주면 해당 이메일이 일치하는 사용자 정보를 리턴
+    #   => 같은 이메일이 없다면 400처리 (해당 사용자는 존재하지 않습니다.)    
+def find_user_by_email(params):
     return {
-        'code' : 400,
-        'message' :'해당 사용자는 존재하지 않습니다.'
-    }, 400
-        
+        '임시':'임시'
+    }
