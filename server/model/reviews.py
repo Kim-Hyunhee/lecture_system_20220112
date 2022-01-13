@@ -5,7 +5,7 @@ class Reviews:
         self.user_id = data_dict['user_id']
         self.title = data_dict['title']
         self.content = data_dict['content']
-        self.score = data_dict['score']
+        self.score = float(data_dict['score'])
         self.created_at = data_dict['created_at']
         
     def get_data_object(self):

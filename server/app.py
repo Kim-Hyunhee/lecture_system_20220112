@@ -13,7 +13,7 @@ def create_app():
     # API 로직 함수 / 클래스 들은 create_app 함수에서만 필요함
     # 함수 내부에서 import 실행 => 순환 참조 회피 (정상 동작 유도)
     from .api.user import login, sign_up, find_user_by_email
-    from .api.lectures import get_all_lectures, select_lecture, delete_lecture
+    from .api.lectures import get_all_lectures, select_lecture, delete_lecture, write_review
 
     # 기본 로그인
     @app.post("/user")
@@ -47,5 +47,10 @@ def create_app():
     @app.delete("/lecture")
     def lecture_delete():
         return delete_lecture(request.args.to_dict())
+    
+    # 리뷰 등록
+    @app.post("/lecture/review")
+    def review_post():
+        return write_review(request.form.to_dict())
        
     return app
