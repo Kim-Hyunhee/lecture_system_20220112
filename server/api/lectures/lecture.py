@@ -20,6 +20,24 @@ def get_all_lectures(params):
     
 # 수강 신청 기능
 def apply_lecture(params):
+    
+    # 같은 과목에 같은 사람이 신청은 불가 (SELECT)
+    sql = f"SELECT * FROM lecture_user WHERE lecture_id={params['lecture_id']} AND user_id='{params['user_id']}'"
+    
+    already_apply = db.excuteOne(sql)
+    
+    if already_apply :
+        return {
+            'code' : 400,
+            'message' : '이미 수강 신청이 완료 되었습니다.'
+        }, 400
+    
+    # lecture_user 테이블에 한 줄 추가 (INSERT INTO)
+    
+    sql = f"INSERT INTO lecture_user VALUES ({params['lecture_id']}, {params['user_id']})"
+    
+    db.insertAndCommit(sql)
+       
     return{
-        '임시' : '수강신청'
+        'code' : '수강 신청을 성공했습니다.'
     }
