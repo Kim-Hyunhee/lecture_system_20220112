@@ -1,1 +1,1 @@
-from .lecture import get_all_lectures, select_lecture
+from .lecture import get_all_lectures, select_lecture, delete_lecture

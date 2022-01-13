@@ -44,3 +44,23 @@ def select_lecture(params):
             'code' :400,
             'message' :'이미 수강 신청을 했습니다.'
         }, 400
+        
+# 수강 취소
+def delete_lecture(params):
+    
+    # 중복 취소 불가
+    sql = f"SELECT * FROM lecture_user WHERE lecture_id = {params['lecture_id']} AND user_id = {params['user_id']}"
+    lecture_ok = db.excuteOne(sql)
+    if  not lecture_ok :
+        return {
+            'code' : 400,
+            'message' : '수강 신청을 하지 않았습니다.'
+        }, 400
+    
+    sql = f"DELETE FROM lecture_user WHERE lecture_id = {params['lecture_id']} AND user_id = {params['user_id']}"
+    db.cursor.execute(sql)
+    db.db.commit()
+    return {
+        'code' : 200,
+        'message' : '수강 신청이 취소 되었습니다.'
+    }
