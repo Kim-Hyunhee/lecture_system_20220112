@@ -7,7 +7,7 @@ def get_all_lectures(params):
     
     sql = f"SELECT * FROM lectures ORDER BY name"
     
-    db_list = db.executeAll(sql)
+    db_list = db.excuteAll(sql)
     
     lectures = [ Lectures(row).get_data_object()  for row in db_list ]
     
@@ -93,7 +93,7 @@ def view_lecture_detail(id, params):
 
     review_data_list = db.excuteAll(sql)
 
-    reviews = [ Reviews(row).get_data_object() for row  in review_data_list ]
+    review_list = [ Reviews(row).get_data_object() for row  in review_data_list ]
 
 
     # 3. 강의의 평점을 추가로 조회 (해당 강의의 모든 리뷰의 점수 -> 평균)
@@ -105,7 +105,6 @@ def view_lecture_detail(id, params):
         'code': 200,
         'message': '강의 상세 조회',
         'data': {
-            'lecture': lecture.get_data_object(),
-            'reviews': reviews
+            'lecture': lecture.get_data_object(reviews=review_list),
         }
     } 
