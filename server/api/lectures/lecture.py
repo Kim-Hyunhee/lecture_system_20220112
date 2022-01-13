@@ -99,8 +99,6 @@ def view_lecture_detail(id, params):
     # 3. 강의의 평점을 추가로 조회 (해당 강의의 모든 리뷰의 점수 -> 평균)
 
 
-    # 3. 모든 리뷰 내역을 추가로 첨부.
-
     return {
         'code': 200,
         'message': '강의 상세 조회',
