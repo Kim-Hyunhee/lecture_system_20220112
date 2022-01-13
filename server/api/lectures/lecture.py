@@ -1,4 +1,3 @@
-from server.model import Lectures
 from server.model import Lectures, Reviews
 from server import db
 
@@ -97,12 +96,18 @@ def view_lecture_detail(id, params):
 
 
     # 3. 강의의 평점을 추가로 조회 (해당 강의의 모든 리뷰의 점수 -> 평균)
-
+    #  => 집계 함수를 SQL로 작성해서 평점을 넘겨주자
+    
+    sql = f"SELECT AVG(score) AS avg_score FROM lecture_review WHERE lecture_review.lecture_id = {id};"
+    
+    avg_score_result = db.excuteOne(sql)
+    
+    avg_score = round(avg_score_result['avg_score'], 2)
 
     return {
         'code': 200,
         'message': '강의 상세 조회',
         'data': {
-            'lecture': lecture.get_data_object(reviews=review_list),
+            'lecture': lecture.get_data_object(reviews=review_list, avg_score=avg_score),
         }
     } 
