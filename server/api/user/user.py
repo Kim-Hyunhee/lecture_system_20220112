@@ -53,6 +53,22 @@ def sign_up(params):
     #   => 파라미터로 email을 주면 해당 이메일이 일치하는 사용자 정보를 리턴
     #   => 같은 이메일이 없다면 400처리 (해당 사용자는 존재하지 않습니다.)    
 def find_user_by_email(params):
-    return {
-        '임시':'임시'
-    }
+    
+    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
+    find_user_data = db.excuteOne(sql)
+    if find_user_data:
+        find_user = Users(find_user_data)
+        return {
+            'code' : 200,
+            'message' : '사용자를 찾았습니다.',
+            'data' : {
+                'user' : find_user.get_data_object()
+            }
+        }
+        # 해당 이메일의 사용자가 발견된 경우
+    else:
+        # 검색이 되지 않은 경우
+        return {
+            'code' : 400,
+            'message' : '해당 이메일의 사용자는 없습니다.'
+        }, 400
