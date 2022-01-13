@@ -41,3 +41,9 @@ def apply_lecture(params):
     return{
         'code' : '수강 신청을 성공했습니다.'
     }
+    
+# 수강 취소 - DELETE
+def cancel_apply(params):
+    return {
+        '임시' : '수강 취소 기능'
+    }
