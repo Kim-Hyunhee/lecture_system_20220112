@@ -1,4 +1,3 @@
-from server.api import lectures
 from server.model import Lectures
 from server import db
 
@@ -17,4 +16,10 @@ def get_all_lectures(params):
         'data' :{
             'lectures' : lectures
         }    
+    }
+    
+# 수강 신청 기능
+def apply_lecture(params):
+    return{
+        '임시' : '수강신청'
     }
