@@ -74,3 +74,8 @@ def cancel_apply(params):
         'message' : '수강 신청이 취소 되었습니다.'
             }
     
+# 특정 강의 상세보기
+def view_lecture_detail():
+    return {
+        '임시' :'강의 상세 조회'
+    }
